@@ -1,0 +1,35 @@
+* express is framework library of nodejs.
+
+* Express.js
+Express.js is a web framework built on top of Node.js.
+It simplifies creating a server and handling requests like “What to do when someone visits a webpage or sends data?”
+
+Why use Express.js?
+
+Simplifies Routing:
+
+Handles routes like /home, /login, /users easily.
+You don’t need to write complex logic yourself.
+Middleware Support:
+
+You can add features like logging, authentication, or error handling with middleware.
+Lightweight and Flexible:
+
+It doesn’t force you to use specific tools or libraries—use only what you need.
+RESTful APIs Made Easy:
+
+Express.js is great for creating APIs to connect your backend with a frontend (e.g., React, Angular) or mobile app.
+Example Use Case:
+In a food delivery app:
+
+Node.js ensures the app is fast and handles multiple user requests at once.
+Express.js makes it easy to define routes like:
+/menu to show food items.
+/order to place an order.
+/track to track delivery.
+
+
+
+* Key Difference: Node.js vs. Express.js
+Node.js: Provides the engine to run JavaScript on the server and handle requests.
+Express.js: Makes it easier to organize and handle those requests by adding routing and middleware support.
