@@ -1,0 +1,26 @@
+* a runtime environment for executing javascript code
+*  usually moblile app and web applicatons are use the node.js to process the data in backend.
+* nodejs provide a backend services.
+
+* Node.js is a runtime environment that lets you run JavaScript on the server (not just in the browser).
+
+1. Node.js
+Node.js is a runtime environment that lets you run JavaScript on the server (not just in the browser).
+Why use Node.js?
+
+Fast and Scalable:
+
+Handles thousands of user requests at the same time without slowing down.
+Perfect for apps like real-time chats, live streaming, or APIs.
+Single Language (JavaScript):
+
+You can use the same language (JavaScript) for both the frontend and backend.
+Non-blocking I/O:
+
+It doesn’t “pause” while waiting for a task like reading files or talking to a database.
+This makes it faster compared to traditional server languages like PHP.
+Rich Ecosystem with npm:
+
+Node.js has a huge library of pre-built tools and packages to make development faster.
+Example Use Case:
+Imagine a real-time chat app. Node.js ensures all users can send and receive messages quickly without delay.

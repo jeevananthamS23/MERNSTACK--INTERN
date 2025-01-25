@@ -1,0 +1,626 @@
+1.create a folder => go to the path => cmd => then type ( code.)   (it will open vs code ).
+2. then  ==>  npm i --s express express-handlebars body-parser
+
+
+i)  express  
+
+    purpose: express is a fast,  minimalist web framework for Node.js. it provide tools to build 
+    web applications  and APIs.
+
+    Usage:
+         * to handle HTTP requests and responses
+         *  to create routes for different endpoints(en GET, POST,PUT, DELETE)
+         *To set up routes and middleware.
+        *To serve static files
+    
+ii)  express-handlebars
+    
+      purpose : this package is an  Express.js template engin for rendering 
+      dynamic HTML pages using Handlebars syntax.
+      *  It helps in rendering dynamic views (HTML files) by injecting data into templates.
+
+       usage:
+          to serve a dynamic content by combining HTML  template with java scripts data.
+          to create a reusable components like headers, footers, etc Handlebars partials.
+       Why it's needed:
+            *To generate dynamic web pages by combining templates with data.
+            *For applications where you need server-side rendering of HTML content.
+
+iii)
+
+     body-parser
+	* Purpose : Body-parser is middleware that parses incoming requests bodies in a middleware before your handlers, 
+    making the request data accessible in req.body . It is especially useful for handling POST reuqests.
+
+    * Purpose: body-parser is middleware for parsing incoming request bodies in Express applications. 
+    It helps extract data from POST requests.
+
+	Usage :
+		*To parse JSON data from the request body.
+		*To parse URL-encoded data from forms.
+        *To handle JSON and URL-encoded form data in HTTP requests.
+        *Essential for APIs that need to read incoming request payloads.
+
+When to Use These Packages Together
+  You would use these packages together for:
+
+Building a Dynamic Website:
+  
+  *express to handle routes and requests.
+  *express-handlebars to render dynamic HTML templates.
+  *body-parser to process form submissions or JSON data from the frontend.
+
+
+**--s (Save)
+Purpose: Saves the installed packages (express, express-handlebars, body-parser) as dependencies in the package.json file.
+Result: Your package.json will have an updated dependencies section
+
+
+
+iV) 
+   nodemon app.js
+   it will automatically evety time start app. we canot do manually.
+
+   nodemon is a development tool for Node.js applications that automatically restarts the server whenever you make changes to the source files. 
+   It makes the development process smoother and faster, as you don't need
+   to manually stop and restart the server every time you update your code.
+
+
+v)
+npm i mongodb (install mongodb driver)=>  install mongodb driver
+
+installs the MongoDB Node.js driver, a library that allows your Node.js application to interact with a MongoDB database. 
+This driver is essential for establishing a connection with MongoDB, querying the database, 
+and performing CRUD (Create, Read, Update, Delete) operations.
+
+
+
+=======================================================================================================================
+
+
+
+create a folder and open it in the vs code
+
+npm i --s express express-handlebars body-parser
+npm i -g nodemon
+
+npm i mongodb
+
+1. Express :
+ 	Purpose : express is a fast ,  minimalist web framework for Node.js . It provides tools to build web applications and APIs.
+
+	Usage :
+		To handle HTTP requests and responses.
+		To create routes for different endpoints(e.g , get , post, put,delete).
+		To integerate middleware for processing requests.
+
+====================================================================
+2. express - handlebars
+	Purpose : This package is an express.js template engine for rendering dynamic HTML pages using Handlebars syntax.
+
+	Usage : 
+		    To serve dynamic content by combining HTML templates with javascript data.
+		    To create reusable components like headers , footers , etc ,. using Handlebars partials.
+=====================================================================
+3. body-parser
+	Purpose : Body-parser is middleware that parses incoming requests bodies in a middleware before your handlers, making the request data accessible in req.body . It is especially useful for handling POST reuqests.
+
+	Usage :
+		To parse JSON data from the request body.
+		To parse URL-encoded data from forms.
+======================================================================
+
+const express = require('express');
+//const bodyparser = require('body-parser');
+const exhbs = require('express-handlebars');
+
+const app = express();
+
+//COnfigure Handlebars
+
+app.engine(
+   'hbs' , exhbs.engine(
+      {
+         layoutsDir : 'viewsfold/',
+         defaultLayout : 'maincopy',
+         extname : 'hbs',
+      }
+   )
+);
+
+app.set('view engine', 'hbs');
+app.set('views', 'viewsfold');
+
+// Routes
+
+app.get('/', (req , res) => {
+   const msg = 'test';
+   res.render('maincopy', {msg});
+});
+
+//Start the server
+
+app.listen(8000 , () => {
+   console.log('Listening on port 8000....');
+});
+
+=====================================================================
+
+initial code:
+
+app.js
+
+const express= require('express');   // we can access all the functionality of the express under the name express
+const exhbs=require('express-handlebars');// we can access all the functionality of the express -handlebars under the name express
+const app= express();   // express would return a object
+
+// configure Handlebars
+
+app.engine('hbs',exhbs.engine(
+    {    layoutsDir:'viewsfold/',
+         defaultLayout: 'maincopy',
+         extname:'hbs',
+    }
+)
+);
+
+   // hbs  name of the app
+   //layoutsDir - directory of the folder
+   // defaultLayout -- html files
+   // extname  --   extension
+
+app.set('view engine','hbs');    //  name of the app
+app.set('views','viewsfold');  // name of the folder
+
+// Routes
+app.get('/',(req,res)=>{                                      // the data was render in the manicopy page
+                               // req  request   was came from post and  responses came from get
+     const msg='Test';
+     res.render('maincopy',{msg});
+});
+
+// start the server
+
+app.listen(8000,()=>{        // it was place to render the data on this port
+  console.log('Listening on port 8000...');
+});
+
+
+maincopy.hbs
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>
+            Mongodb crud
+        </title>
+    </head>
+    <body>
+        <h1>
+            mongodb crud example
+        </h1>
+        <p>
+            {{msg}}    // it was came from render with in app.js
+        </p>
+    </body>
+</html>
+
+2 =============================================================================================.database connectivity:
+
+maincopy.hbs
+
+const mongodb= require('mongodb');  // mongodb functionality are accessed using the mongodb variable
+const MongoClient = mongodb.MongoClient;   // MongoClint is a class 
+
+let database;
+
+async function getDatabase()
+{             // why await because the function is return a promise so we use a await  why because the value can taken or not taken from db so we wait some time . if we use await then we async in function defenition
+    const client = await  MongoClient.connect('mongodb://127.0.0.1:27017'); // connection string is passed to the connect function   then client was created
+    database =client.db('intern');   // using clint we can access  database  with in the mongodb 
+    if(database!=0)
+    {
+        console.log("database is created successfully");
+    }
+
+    else{
+        console.log('database connection failed');
+    }
+
+    return database;
+}
+
+module.exports={getDatabase}; // export the getDatabase function like this
+
+
+app.js
+
+const express= require('express');   // we can access all the functionality of the express under the name express
+const exhbs=require('express-handlebars');// we can access all the functionality of the express -handlebars under the name express
+const app= express();   // express function would return a object
+const dbo=require('./db'); // import db file all the objects can acces using the name dbo
+
+// configure Handlebars
+
+app.engine('hbs',exhbs.engine(
+    {    layoutsDir:'viewsfold/',
+         defaultLayout: 'maincopy',
+         extname:'hbs',
+    }
+)
+);
+
+   // hbs  name of the   app engine
+   //layoutsDir - directory of the folder
+   // defaultLayout -- html files
+   // extname  --   extension
+
+app.set('view engine','hbs');    //  name of the app engine
+app.set('views','viewsfold');  // name of the folder to render a file.
+
+
+/// Routes
+app.get('/', async (req, res) => {
+     let database = await dbo.getDatabase();      //dbo access the getDatabase from db file and the function return the database connection
+     const collection = database.collection('student');  // acces the  collection with in the return database
+     const cursor = collection.find({});     // find return the cursor object 
+     let data = await cursor.toArray();     // using cursor object to acces the toArray
+     let msg = 'test';
+ 
+ 
+     console.log('The data:', data);   // it was printed in console
+     res.render('maincopy', { msg, data });  // the msg and data are render to the maincopy.hbs with in datas are displayed
+ });
+
+
+ 
+
+// start the server
+
+app.listen(8000,()=>{        // it was place to render the data on this port
+  console.log('Listening on port 8000...');
+});
+
+
+
+
+
+
+
+
+
+
+
+
+3=================================================================================================insert data in database:
+
+
+   html
+
+   <!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>MongoDB CRUD</title>
+    </head>
+    <body>
+        <h1>MongoDB CRUD Example</h1>
+
+        <ul>
+            {{#if data}}
+                {{#each data}}
+                    <li>
+                        Name: {{this.name}} &nbsp; | &nbsp;
+                        Age: {{this.age}} &nbsp; | &nbsp;
+                        City: {{this.city}}
+                    </li>
+                {{/each}}
+            {{else}}
+                <p>No data available.</p>
+            {{/if}}
+        </ul>
+
+        <h3>Create a Form</h3>
+        <form action="/stuinfo" method="post">
+            <label>Name:</label>
+            <input type="text" name="name" /> <br />    
+            <label>Age:</label>
+            <input type="number" name="age" /> <br />
+            <label>City:</label>
+            <input type="text" name="city" /> <br />
+            <input type="submit" />
+        </form>
+
+        <p>{{msg}}</p>
+    </body>
+</html>
+<!--the form was got the input from the user then.  
+ and then once submit the data then it trigger /stuinfo and it search the   /stuinfo  and method post in app.js if match then route code is execute.
+
+
+
+
+app.js
+
+
+const express= require('express');   // we can access all the functionality of the express under the name express
+const exhbs=require('express-handlebars');// we can access all the functionality of the express -handlebars under the name express
+const bodyparser=require('body-parser');
+const app= express();   // express would return a object
+const dbo=require('./db');
+
+// configure Handlebars
+
+app.engine('hbs',exhbs.engine(
+    {    layoutsDir:'viewsfold/',
+         defaultLayout: 'maincopy',
+         extname:'hbs',
+    }
+)
+);
+
+   // hbs  name of the   app engine
+   //layoutsDir - directory of the folder
+   // defaultLayout -- html files
+   // extname  --   extension
+
+app.set('view engine','hbs');    //  name of the app engine
+app.set('views','viewsfold');  // name of the folder to render a file.
+app.use(bodyparser.urlencoded({extended:true}));
+
+//Routes
+app.get('/', async (req, res) => {
+     let database = await dbo.getDatabase();
+     const collection = database.collection('student');
+     const cursor = collection.find({});
+     let data = await cursor.toArray();
+     let msg = '';
+ 
+     // Check if query parameter 'status' is present and equals '1'
+     if (req.query.status === '1') {
+         msg = "Data inserted successfully...";
+     }
+ 
+     console.log('The data:', data);
+     res.render('maincopy', { msg, data });
+ });
+
+
+//  app.get('/', async (req, res) => {
+//      let database = await dbo.getDatabase();
+//      const collection = database.collection('student');
+//      const cursor = collection.find({});
+//      let data = await cursor.toArray(); // Ensures 'data' is an array
+//      const msg = req.query.status === '1' ? "Data inserted successfully..." : "Test";
+ 
+//      console.log('Data passed to template:', data); // For debugging
+//      res.render('maincopy', { msg, data });
+//  });
+ 
+
+
+app.post('/stuinfo',async(req,res)=>{
+     let database= await dbo.getDatabase();
+      const collection=database.collection('student');
+      const stud={name:req.body.name,age:req.body.age,city:req.body.city}  // take the data from the request from maincopy file with in from   and create a document
+      await collection.insertOne(stud);   //  use await because it take some time , insert the value in actual database using insertOne function
+      res.redirect('/?status=1');    //  res.redirect() tells the browser to navigate to another URL.
+                                         // The URL: '/?status=1'
+// '/' : The base path or root URL of the application.
+// '?status=1' : A query string appended to the URL to convey additional information.
+// 'status' : A query parameter.
+// '1' : Its value.
+// This is often used to pass information about the outcome of a previous operation, such as success or failure.
+
+
+      
+})
+// start the server
+
+app.listen(8000,()=>{        // it was place to render the data on this port
+  console.log('Listening on port 8000...');
+});
+
+
+
+4===================================================================update the delete 
+
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>MongoDB CRUD</title>
+    </head>
+    <body>
+        <h1>MongoDB CRUD Example</h1>
+
+        <ul>
+            {{#if data}}
+                {{#each data}}
+                    <li>
+                        Name: {{this.name}} &nbsp; | &nbsp;
+                        Age: {{this.age}} &nbsp; | &nbsp;
+                        City: {{this.city}}
+                        <a href="/?edit_idd={{this._id}}">Edit</a>
+                         <a href="/?del_idd={{this._id}}">delete</a>
+                    </li>
+                {{/each}}
+            {{else}}
+                <p>No data available.</p>
+            {{/if}}
+        </ul>
+        {{# if edit_id}}
+        <h3>Edit a Form</h3>
+        <form action="/updateinfo/{{edit_id}}" method="post">
+            <label>Name:</label>
+            <input type="text" name="name" value="{{edit_stu.name}}"/> <br />    
+            <label>Age:</label>
+            <input type="number" name="age" value="{{edit_stu.age}}"/> <br />
+            <label>City:</label>
+            <input type="text" name="city" value="{{edit_stu.city}}"/> <br />
+            <input type="submit" />
+        </form>
+        {{else}}
+
+        <h3>Create a Form</h3>
+        <form action="/stuinfo" method="post">
+            <label>Name:</label>
+            <input type="text" name="name" /> <br />    
+            <label>Age:</label>
+            <input type="number" name="age" /> <br />
+            <label>City:</label>
+            <input type="text" name="city" /> <br />
+            <input type="submit" />
+        </form>
+        {{/if}}
+
+
+
+
+
+        <p>{{msg}}</p>
+
+
+
+    </body>
+</html>
+
+
+
+--------------------------
+const express= require('express');   // we can access all the functionality of the express under the name express
+const exhbs=require('express-handlebars');// we can access all the functionality of the express -handlebars under the name express
+const bodyparser=require('body-parser');
+const app= express();   // express would return a object
+const dbo=require('./db');
+const { ObjectId } = require('mongodb');
+const objid = dbo.objectId;
+
+// configure Handlebars
+
+app.engine('hbs',exhbs.engine(
+    {    layoutsDir:'viewsfold/',
+         defaultLayout: 'maincopy',
+         extname:'hbs',
+    }
+)
+);
+
+   // hbs  name of the   app engine
+   //layoutsDir - directory of the folder
+   // defaultLayout -- html files
+   // extname  --   extension
+
+app.set('view engine','hbs');    //  name of the app engine
+app.set('views','viewsfold');  // name of the folder to render a file.
+app.use(bodyparser.urlencoded({extended:true}));
+
+/// Routes
+app.get('/', async (req, res) => {
+    let edit_id,edit_stu;
+     let database = await dbo.getDatabase();
+     const collection = database.collection('student');
+     const cursor = collection.find({});
+     let data = await cursor.toArray();
+     let msg = '';
+      if(req.query.edit_idd)
+      {
+        edit_id=req.query.edit_idd
+        edit_stu=await collection.findOne({_id:  new objid(edit_id)})  //new ObjectId
+      }
+      if(req.query.del_idd)
+        {
+          del_id=req.query.del_idd
+          await collection.deleteOne({_id:  new objid(del_id)})  //new ObjectId
+          res.redirect('/?status=3');
+        }
+
+     // Check if query parameter 'status' is present and equals '1'
+     if (req.query.status === '1') {
+         msg = "Data inserted successfully...";
+     }
+     else if (req.query.status === '2') {
+        msg = "Data updated successfully...";
+    }
+    else if (req.query.status === '3') {
+      msg = "Data deleted successfully...";
+  }
+
+     console.log('The data:', data);
+     res.render('maincopy', { msg, data,edit_id,edit_stu });
+ });
+
+
+//  app.get('/', async (req, res) => {
+//      let database = await dbo.getDatabase();
+//      const collection = database.collection('student');
+//      const cursor = collection.find({});
+//      let data = await cursor.toArray(); // Ensures 'data' is an array
+//      const msg = req.query.status === '1' ? "Data inserted successfully..." : "Test";
+ 
+//      console.log('Data passed to template:', data); // For debugging
+//      res.render('maincopy', { msg, data });
+//  });
+ 
+
+
+app.post('/stuinfo',async(req,res)=>{
+     let database= await dbo.getDatabase();
+      const collection=database.collection('student');
+      const stud={name:req.body.name,age:req.body.age,city:req.body.city}
+      await collection.insertOne(stud);
+      res.redirect('/?status=1');
+
+      
+})
+
+app.post('/updateinfo/:e_id',async(req,res)=>{
+  const database=await dbo.getDatabase();
+  const collection=database.collection('student');
+  const stud={name:req.body.name,age:req.body.age,city:req.body.city};
+  let ed_idd=req.params.e_id;  // parser the paramater data 
+  await collection.updateOne({_id: new objid(ed_idd)},{$set:stud});
+
+  res.redirect('/?status=2');
+})
+
+
+
+
+
+// start the server
+
+app.listen(8000,()=>{        // it was place to render the data on this port
+  console.log('Listening on port 8000...');
+});
+
+
+
+------------------------
+
+const mongodb= require('mongodb');  // mongodb functionality are accessed using the mongodb variable
+const MongoClient = mongodb.MongoClient;   // MongoClint is a class 
+
+let database;
+let objectId=mongodb.ObjectId; // ObjectId was take in mongodb
+async function getDatabase()
+{             // why await because the function is return a promise so we use a await  why because the value can taken or not taken from db so we wait some time . if we use await then we async in function defenition
+    const client = await  MongoClient.connect('mongodb://127.0.0.1:27017'); // connection string is passed to the connect function   then client was created
+    database =client.db('intern');   // using clint we can access  database  with in the mongodb 
+    if(database!=0)
+    {
+        console.log("database is created successfully");
+    }
+
+    else{
+        console.log('database connection failed');
+    }
+
+    return database;
+}
+
+module.exports={getDatabase,objectId};
+
+
+
+5-------------------------------setup moongoose
+

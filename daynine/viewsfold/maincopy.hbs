@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>MongoDB CRUD</title>
+    </head>
+    <body>
+        <h1>MongoDB CRUD Example</h1>
+
+        <ul>
+            {{#if data}}
+                {{#each data}}
+                    <li>
+                        Name: {{this.name}} &nbsp; | &nbsp;
+                        Age: {{this.age}} &nbsp; | &nbsp;
+                        City: {{this.city}}
+                        <a href="/?edit_idd={{this._id}}">Edit</a>
+                         <a href="/?del_idd={{this._id}}">delete</a>
+                    </li>
+                {{/each}}
+            {{else}}
+                <p>No data available.</p>
+            {{/if}}
+        </ul>
+        {{# if edit_id}}
+        <h3>Edit a Form</h3>
+        <form action="/updateinfo/{{edit_id}}" method="post">
+            <label>Name:</label>
+            <input type="text" name="name" value="{{edit_stu.name}}"/> <br />    
+            <label>Age:</label>
+            <input type="number" name="age" value="{{edit_stu.age}}"/> <br />
+            <label>City:</label>
+            <input type="text" name="city" value="{{edit_stu.city}}"/> <br />
+            <input type="submit" />
+        </form>
+        {{else}}
+
+        <h3>Create a Form</h3>
+        <form action="/stuinfo" method="post">
+            <label>Name:</label>
+            <input type="text" name="name" /> <br />    
+            <label>Age:</label>
+            <input type="number" name="age" /> <br />
+            <label>City:</label>
+            <input type="text" name="city" /> <br />
+            <input type="submit" />
+        </form>
+        {{/if}}
+
+
+
+
+
+        <p>{{msg}}</p>
+
+
+
+    </body>
+</html>
