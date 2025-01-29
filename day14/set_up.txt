@@ -1,0 +1,31 @@
+create a folder --> cmd->> code .>>> install    npm i --s express express-handlebars body-parser.  npm i mongodb , npm i nodemon.
+
+
+->>create a folder  backend
+     with in it folder
+     -- configs  ---> db.js file   ---> with in it database connection code
+    --  contollers --->   somenamecontroller.js   ---->       create  a  https methods get, post , delete  etc
+    --  models ---->     create a model file     ---->   define a schema of the model
+    --  routes --->      createroute file        --->    create a route for https methods
+
+
+
+
+
+
+npm i dotenv it handel all configuration
+.env file it contain   database connection and port using process keyword to access these things
+MONGO_URI=mongodb://localhost:27017/mern_db
+#127.0.0.1.27017
+PORT = 5000
+
+----> outer the project create server.js here to run the app
+
+
+work flow to create  a project:
+
+   ***1. initially set up   configs ==> db.js
+   ***2.setup the model for schema purpose
+   ***3.build the https methods in contollers
+   ***4.build the routes in the routes folder
+
